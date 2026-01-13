@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bui Anh Van - Hàng Bom & Công Nghệ</title>
+    <!-- Fonts: Inter (Modern, Clean) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Colors from User Request */
+            --bg-body: #F5F5F7;
+            /* Xám khói chống lóa (Apple) */
+            --header-bg: #1d3557;
+            /* Xanh Navy đậm */
+            --white: #ffffff;
+            --text-dark: #1d1d1f;
+            --text-gray: #86868b;
+
+            --bom-color: #d62828;
+            /* Đỏ đậm */
+            --tech-color: #1d3557;
+            /* Navy */
+
+            --card-radius: 15px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* Bóng mờ nổi */
+            --shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+        }
+
+        /* HEADER - NAVY BLUE */
+        header {
+            background-color: var(--header-bg);
+            color: var(--white);
+            padding: 20px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: capitalize;
+            /* Bui Anh Van */
+        }
+
+        .brand-subtitle {
+            font-size: 0.85rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 25px 15px;
+        }
+
+        /* SECTION HEADERS */
+        .section-wrap {
+            margin-top: 35px;
+            display: none;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* THEME COLORS */
+        .theme-bom .section-title {
+            color: var(--bom-color);
+            border-bottom: 4px solid var(--bom-color);
+            margin-bottom: -14px;
+            padding-bottom: 10px;
+        }
+
+        .theme-tech .section-title {
+            color: var(--tech-color);
+            border-bottom: 4px solid var(--tech-color);
+            margin-bottom: -14px;
+            padding-bottom: 10px;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* 2 cột mobile */
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+
+            .brand-name {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* PRODUCT CARD */
+        .card {
+            background-color: var(--white);
+            border-radius: var(--card-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            /* Viền siêu mờ */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* IMAGE */
+        .img-box {
+            position: relative;
+            padding-top: 100%;
+            /* Square */
+            background: #eef0f2;
+            overflow: hidden;
+        }
+
+        .img-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .img-box img {
+            transform: scale(1.05);
+        }
+
+        .discount-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff3b30;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        .placeholder-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #999;
+            font-size: 0.8rem;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        /* CONTENT */
+        .info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .prod-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            height: 2.8em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .price-area {
+            margin-top: auto;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .price-now {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #1d1d1f;
+        }
+
+        /* Màu giá theo theme */
+        .theme-bom .price-now {
+            color: var(--bom-color);
+        }
+
+        .theme-tech .price-now {
+            color: var(--tech-color);
+        }
+
+        .price-old {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            text-decoration: line-through;
+        }
+
+        /* BUTTONS */
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            text-decoration: none;
+            padding: 9px 0;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-zalo {
+            background-color: #0068ff;
+        }
+
+        /* Xanh Zalo */
+
+        .btn-mess {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            /* Tím hồng Gradient */
+        }
+
+        /* LOADING */
+        .loader {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand">
+            <h1 class="brand-name">Bui Anh Van</h1>
+            <div class="brand-subtitle">Uy Tín - Chất Lượng làm nên Thương Hiệu</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="loading" class="loader">
+            <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...
+        </div>
+
+        <!-- BOM SECTION -->
+        <div id="bom-wrap" class="section-wrap theme-bom">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-gift"></i> HÀNG BOM</div>
+            </div>
+            <div id="bom-grid" class="grid"></div>
+        </div>
+
+        <!-- TECH SECTION -->
+        <div id="tech-wrap" class="section-wrap theme-tech">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-laptop-code"></i> CÔNG NGHỆ</div>
+            </div>
+            <div id="tech-grid" class="grid"></div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIG
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSyTB6dwVED6s2DmkVpyEhu0ATd368vx2hq9Gije2l2q8T2HO_IyehXR96lBtSd0sPiWh_necDajrZB/pub?output=csv';
+        const LINK_ZALO = 'https://zalo.me/0559516054';
+        const LINK_MESS = 'https://m.me/buianhvan2005';
+
+        // INIT
+        init();
+
+        async function init() {
+            try {
+                // Cache bust
+                const res = await fetch(CSV_URL + '&t=' + Date.now());
+                const text = await res.text();
+                processCSV(text);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loading').innerText = 'Lỗi kết nối. Vui lòng tải lại trang!';
+            }
+        }
+
+        function processCSV(text) {
+            const rows = text.split('\n');
+            const bomList = [];
+            const techList = [];
+
+            // Skip Header (row 0)
+            for (let i = 1; i < rows.length; i++) {
+                const line = rows[i].trim();
+                if (!line) continue;
+
+                // Parse Columns
+                const cols = parseItems(line);
+                // [0]Name [1]Old [2]New [3]Img [4]Cat
+
+                if (cols.length < 3) continue;
+
+                const item = {
+                    name: cols[0],
+                    oldP: fixPrice(cols[1]),
+                    newP: fixPrice(cols[2]),
+                    img: (cols[3] || '').trim(),
+                    cat: (cols[4] || '').trim().toLowerCase()
+                };
+
+                // Filter
+                if (item.cat.includes('công nghệ') || item.cat.includes('tech')) {
+                    techList.push(item);
+                } else {
+                    bomList.push(item);
+                }
+            }
+
+            // Render
+            renderGrid(bomList, 'bom-grid', 'bom-wrap');
+            renderGrid(techList, 'tech-grid', 'tech-wrap');
+
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function renderGrid(items, gridId, wrapId) {
+            if (items.length === 0) return;
+            document.getElementById(wrapId).style.display = 'block';
+
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+
+            items.forEach(p => {
+                // Discount Badge
+                let badge = '';
+                if (p.oldP > p.newP) {
+                    const pct = Math.round(((p.oldP - p.newP) / p.oldP) * 100);
+                    if (pct > 0) badge = `<span class="discount-tag">-${pct}%</span>`;
+                }
+
+                // Image
+                let imgHtml = '';
+                if (!p.img) {
+                    imgHtml = `<div class="placeholder-text">Bui Anh Van<br>Store</div>`;
+                } else {
+                    imgHtml = `<img src="${p.img}" loading="lazy" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                               <div class="placeholder-text" style="display:none">Ảnh lỗi</div>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => { }; // Enable hover on touch
+                card.innerHTML = `
+                    <div class="img-box">
+                        ${badge}
+                        ${imgHtml}
+                    </div>
+                    <div class="info">
+                        <div class="prod-name" title="${p.name}">${p.name}</div>
+                        <div class="price-area">
+                            <span class="price-now">${fmt(p.newP)}</span>
+                            ${p.oldP > p.newP ? `<span class="price-old">${fmt(p.oldP)}</span>` : ''}
+                        </div>
+                        <div class="actions">
+                            <a href="${LINK_ZALO}" target="_blank" class="btn btn-zalo">
+                                <i class="fas fa-comment"></i> Zalo
+                            </a>
+                            <a href="${LINK_MESS}" target="_blank" class="btn btn-mess">
+                                <i class="fab fa-facebook-messenger"></i> Chat
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function parseItems(str) {
+            const arr = [];
+            let inQ = false, val = '';
+            for (let i = 0; i < str.length; i++) {
+                let c = str[i];
+                if (c === '"') inQ = !inQ;
+                else if (c === ',' && !inQ) {
+                    arr.push(val.trim().replace(/^"|"$/g, ''));
+                    val = '';
+                } else val += c;
+            }
+            arr.push(val.trim().replace(/^"|"$/g, ''));
+            return arr;
+        }
+
+        function fixPrice(v) {
+            if (!v) return 0;
+            let n = parseInt(v.toString().replace(/[^0-9]/g, ''));
+            if (isNaN(n)) return 0;
+            if (n > 0 && n < 1000) n *= 1000;
+            return n;
+        }
+
+        function fmt(n) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n);
+        }
+    </script>
+</body>
+
+</html>

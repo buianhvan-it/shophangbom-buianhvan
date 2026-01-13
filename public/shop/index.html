@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Hàng Bom - Bùi Anh Văn</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container">
+                <span>Hotline: 09xx.xxx.xxx</span>
+                <div class="user-actions">
+                    <a href="cart.html" class="cart-icon" style="color:white; margin-right: 15px;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                    <button id="admin-toggle-btn">Chế độ Admin</button>
+                </div>
+            </div>
+        </div>
+        <div class="main-header">
+            <div class="container header-content">
+                <div class="logo">
+                    <h1>HÀNG BOM</h1>
+                    <span>Bùi Anh Văn</span>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-bar-container">
+                    <div class="search-type">
+                        <select id="search-criteria">
+                            <option value="name">Tên hàng</option>
+                            <option value="price">Khoảng giá</option>
+                            <option value="date">Ngày thêm</option>
+                        </select>
+                    </div>
+                    <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm...">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Trang chủ</a></li>
+                        <li><a href="#new-arrivals-section">Hàng mới về</a></li>
+                        <li><a href="#promotion-section">Khuyến mại</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Admin Panel (Hidden by default) -->
+        <div id="admin-panel" class="admin-panel hidden">
+            <!-- Add/Edit Form -->
+            <div id="admin-form">
+                <h3>Thêm/Sửa Hàng</h3>
+                <input type="hidden" id="edit-id">
+
+                <div class="form-group">
+                    <label>Hình ảnh (Chọn nhiều ảnh)</label>
+                    <input type="file" id="image-input" multiple accept="image/*">
+                    <div id="image-preview-container"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Mô tả sản phẩm</label>
+                    <textarea id="desc-input" rows="3" placeholder="Nhập mô tả..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Giá bán (VNĐ)</label>
+                    <input type="number" id="price-input" placeholder="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Giá gốc (để tính % khuyến mại, bỏ trống nếu không giảm)</label>
+                    <input type="number" id="original-price-input" placeholder="0">
+                </div>
+
+                <div class="form-actions">
+                    <button id="submit-btn" onclick="handleSubmit()">Thêm Mới</button>
+                    <button id="cancel-btn" class="hidden">Hủy</button>
+                </div>
+            </div>
+
+            <!-- Admin Orders Management -->
+            <div id="admin-orders-section" style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px;">
+                <h3>Quản lý đơn hàng</h3>
+                <div id="admin-orders-list">
+                    <p>Đang tải đơn hàng...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: Hàng Khuyến Mại -->
+        <section id="promotion-section" class="shop-section">
+            <div class="section-title">
+                <h2>HÀNG KHUYẾN MẠI</h2>
+                <div class="divider"></div>
+            </div>
+            <div id="promotion-grid" class="product-grid">
+                <!-- Promo items injected here -->
+            </div>
+        </section>
+
+        <!-- Section: Hàng Mới Về (Top 20) -->
+        <section id="new-arrivals-section" class="shop-section">
+            <div class="section-title">
+                <h2>HÀNG MỚI VỀ</h2>
+                <div class="divider"></div>
+            </div>
+            <div id="new-arrivals-grid" class="product-grid">
+                <!-- New items injected here -->
+            </div>
+        </section>
+
+        <!-- Section: Tất cả sản phẩm -->
+        <section id="all-products-section" class="shop-section">
+            <div class="section-title">
+                <h2>TẤT CẢ SẢN PHẨM</h2>
+                <div class="divider"></div>
+            </div>
+            <div id="product-grid" class="product-grid">
+                <!-- All items injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <img id="modal-main-image" src="" alt="Product Image">
+                    <div id="modal-thumbnails" class="modal-thumbnails"></div>
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-title"></h2>
+                    <div class="modal-price-box">
+                        <span id="modal-price" class="current-price"></span>
+                        <span id="modal-original-price" class="original-price hidden"></span>
+                        <span id="modal-discount" class="discount-badge hidden"></span>
+                    </div>
+                    <div class="modal-meta">
+                        <span><i class="fas fa-eye"></i> <span id="modal-views"></span> lượt xem</span>
+                        <span><i class="fas fa-clock"></i> <span id="modal-date"></span></span>
+                    </div>
+                    <div class="modal-desc">
+                        <h3>Mô tả chi tiết:</h3>
+                        <p id="modal-description"></p>
+                    </div>
+                    <button class="btn-buy" onclick="alert('Liên hệ hotline để mua hàng!')">MUA NGAY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Giới thiệu</h3>
+                    <p>Shop chuyên bán các mặt hàng bom, hàng hoàn về với giá cực rẻ. Chất lượng đảm bảo.</p>
+                    <p><strong>Chủ shop: Bùi Anh Văn</strong></p>
+                </div>
+                <div class="footer-col">
+                    <h3>Thông tin liên hệ</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Địa chỉ shop...</p>
+                    <p><i class="fas fa-phone"></i> 09xx.xxx.xxx</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Shop Hàng Bom. Thiết kế bởi Gemini.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart-manager.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

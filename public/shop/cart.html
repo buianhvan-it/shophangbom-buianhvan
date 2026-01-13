@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - Shop Hàng Bom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container">
+                <span>Hotline: 09xx.xxx.xxx</span>
+                <div style="margin-left: auto;">
+                    <a href="index.html" style="color: white; font-size: 14px;">Quay lại mua thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="main-header" style="padding: 15px 0;">
+            <div class="container header-content">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration:none; color:inherit;">
+                        <h1>GIỎ HÀNG</h1>
+                        <span style="font-size: 14px; text-transform:none;">Thanh toán an toàn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container cart-page">
+        <div class="cart-container">
+            <!-- Left: Items -->
+            <div class="cart-items-section">
+                <h2>Sản phẩm đã chọn</h2>
+                <div id="cart-list" class="cart-list">
+                    <!-- Items injected here -->
+                    <p style="padding: 20px; text-align: center;">Giỏ hàng trống.</p>
+                </div>
+                <div class="cart-summary-lite">
+                    <span>Tổng tiền hàng: </span>
+                    <span id="cart-total-lite" class="price-highlight">0đ</span>
+                </div>
+            </div>
+
+            <!-- Right: Checkout Form -->
+            <div class="checkout-section">
+                <h2>Thông tin đặt hàng</h2>
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" id="cust-name" required placeholder="Nguyễn Văn A">
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" id="cust-phone" required placeholder="09xxxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ nhận hàng</label>
+                        <textarea id="cust-address" required placeholder="Số nhà, đường, phường, quận..."></textarea>
+                    </div>
+
+                    <div class="payment-method-section">
+                        <h3>Phương thức thanh toán</h3>
+
+                        <div class="payment-option">
+                            <input type="radio" name="payment" id="pay-banking" value="banking" checked>
+                            <label for="pay-banking">
+                                <strong>Chuyển khoản ngân hàng</strong>
+                                <small>Miễn phí vận chuyển (nếu có)</small>
+                            </label>
+                        </div>
+
+                        <div class="payment-option">
+                            <input type="radio" name="payment" id="pay-cod" value="cod">
+                            <label for="pay-cod">
+                                <strong>Thanh toán khi nhận hàng (COD)</strong>
+                                <small>Chỉ áp dụng cho đơn hàng trên 500.000đ</small>
+                            </label>
+                        </div>
+                        <p id="cod-warning" class="warning-text hidden"><i class="fas fa-info-circle"></i> Đơn hàng chưa
+                            đủ 500k để Ship COD.</p>
+                    </div>
+
+                    <div class="checkout-total">
+                        <div class="row">
+                            <span>Tạm tính:</span>
+                            <span id="checkout-subtotal">0đ</span>
+                        </div>
+                        <div class="row total">
+                            <span>Tổng cộng:</span>
+                            <span id="checkout-total">0đ</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-checkout">ĐẶT HÀNG NGAY</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2026 Shop Hàng Bom.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart-manager.js"></script>
+    <script src="cart-logic.js"></script>
+</body>
+
+</html>

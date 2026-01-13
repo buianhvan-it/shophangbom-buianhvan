@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm - Shop Hàng Bom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container">
+                <span>Hotline: 09xx.xxx.xxx</span>
+                <a href="index.html" style="color: white; margin-left: auto;">Quay lại Trang chủ</a>
+            </div>
+        </div>
+        <div class="main-header">
+            <div class="container header-content">
+                <div class="logo">
+                    <a href="index.html" style="text-decoration:none; color:inherit;">
+                        <h1>HÀNG BOM</h1>
+                        <span>Bùi Anh Văn</span>
+                    </a>
+                </div>
+
+                <!-- Search Bar (Redirects to index or simple alert for now) -->
+                <div class="search-bar-container">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm..." disabled
+                        style="background: #f9f9f9; cursor: not-allowed;" title="Vui lòng về trang chủ để tìm kiếm">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="index.html#new-arrivals-section">Hàng mới về</a></li>
+                        <li><a href="index.html#promotion-section">Khuyến mại</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container product-detail-page">
+        <div id="loading" class="loading">Đang tải thông tin sản phẩm...</div>
+
+        <div id="product-content" class="product-content hidden">
+            <!-- Left Column: Gallery -->
+            <div class="product-gallery">
+                <div class="main-image-container">
+                    <img id="detail-main-image" src="" alt="Main Product Image">
+                    <div id="detail-discount-badge" class="discount-badge hidden"></div>
+                </div>
+                <div id="detail-thumbnails" class="detail-thumbnails">
+                    <!-- Thumbnails injected here -->
+                </div>
+            </div>
+
+            <!-- Right Column: Info -->
+            <div class="product-details-info">
+                <h1 id="detail-title" class="detail-title"></h1>
+
+                <div class="detail-meta">
+                    <span><i class="fas fa-eye"></i> <span id="detail-views"></span> lượt xem</span>
+                    <span><i class="fas fa-clock"></i> <span id="detail-date"></span></span>
+                </div>
+
+                <div class="detail-price-box">
+                    <span id="detail-price" class="current-price"></span>
+                    <span id="detail-original-price" class="original-price hidden"></span>
+                </div>
+
+                <div class="buying-options">
+                    <div class="option-card">
+                        <h3><i class="fas fa-money-bill-wave"></i> Đặt cọc giữ hàng</h3>
+                        <p>Thanh toán trước 20% giá trị sản phẩm để shop giữ hàng cho bạn.</p>
+                        <hr>
+                        <p class="deposit-amount">Số tiền cọc: <span id="deposit-value"></span></p>
+                        <button id="btn-deposit" class="btn-primary full-width">ĐẶT CỌC NGAY</button>
+                    </div>
+
+                    <div class="option-card">
+                        <h3><i class="fas fa-store"></i> Đến lấy trực tiếp</h3>
+                        <p>Qua shop xem và lấy hàng trực tiếp.</p>
+                        <hr>
+                        <p class="shop-address">Địa chỉ: <span id="shop-address-text">Số 123, Đường ABC, Quận XYZ...
+                                (Chủ shop điền sau)</span></p>
+                        <button id="btn-pickup" class="btn-secondary full-width">XEM BẢN ĐỒ</button>
+                    </div>
+                </div>
+
+                <div class="detail-description">
+                    <h3>Mô tả sản phẩm</h3>
+                    <div class="divider-left"></div>
+                    <p id="detail-description-text"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Deposit Info -->
+    <div id="deposit-modal" class="modal hidden">
+        <div class="modal-content small-modal">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body-column">
+                <h2>Thông tin chuyển khoản</h2>
+                <p>Vui lòng chuyển khoản số tiền cọc: <strong id="modal-deposit-amount"
+                        style="color:red; font-size:18px;"></strong></p>
+                <div class="bank-info">
+                    <p><strong>Ngân hàng:</strong> MB Bank</p>
+                    <p><strong>Số tài khoản:</strong> 09xx.xxx.xxx</p>
+                    <p><strong>Chủ tài khoản:</strong> Bùi Anh Văn</p>
+                    <p><strong>Nội dung:</strong> COC [Mã SP] [SĐT]</p>
+                </div>
+                <p><em>Sau khi chuyển khoản, vui lòng liên hệ hotline để xác nhận.</em></p>
+                <button class="btn-primary" onclick="this.closest('.modal').classList.add('hidden')">Đã hiểu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Giới thiệu</h3>
+                    <p>Shop chuyên bán các mặt hàng bom, hàng hoàn về với giá cực rẻ.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Thông tin liên hệ</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Địa chỉ shop...</p>
+                    <p><i class="fas fa-phone"></i> 09xx.xxx.xxx</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Shop Hàng Bom.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="product-detail.js"></script>
+</body>
+
+</html>
